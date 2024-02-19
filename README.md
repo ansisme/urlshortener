@@ -2,27 +2,85 @@
 ![Architecture Diagram](https://github.com/ansisme/urlshortener/blob/master/URL-Shortener.png)
 [Architecture Diagram](https://github.com/ansisme/urlshortener/blob/master/URL-Shortener.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project is build using `AWS Cloud Services` 
+1. `AWS Lambda`
+2. `AWS API Gateway`
+3. `AWS DynamoDB`
+4. `AWS S3`
+5. `AWS CLoudfront`
+6. `AWS IAM`
 
-## Available Scripts
+   
+## Steps
 
-In the project directory, you can run:
+Follow steps to make your own URL Shortener !:
 
-### `npm start`
+1. ### Create a DynamoDB Table
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Mention the primary Key as `short_id`.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. ### Create an IAM Role
 
-### `npm test`
+Paste the following code in the IAM Policy and attach to your IAM Role.
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:Query",
+                "dynamodb:GetItem"
+            ],
+            "Resource": "arn:aws:dynamodb:<region>:<account-id>:table/<table-name>"
+        }
+    ]
+}
+
+```
+Replace `region`, `account-id`, `table-name` by your specifications.
+
+Additionally, attach `AWSLambdaFullAccess` Policy too.
+
+3. ### Create a Lambda Function
+Create a basic Lambda function and attach the `IAM Role` you just created in step 2.
+  - Create a Lambda Layer and choose AWS Layers, select `AWSLambdaPowertoolsPythonV2`.
+  - Follow the lambda structure given in the backend code in the `backend folder`.
+
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### Create an s3 Bucket
+Create an s3 bucket, enable `ACL` and grant turn of Block public access. 
 
+Edit the bukcet policy as follows: 
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::Bucket-Name/*"
+            ]
+        }
+    ]
+}
+```
+Enable Static Hosting, verify if the URL is working.
+
+
+### Create a API
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
