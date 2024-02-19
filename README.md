@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Architecture Diagram of URL Shortener
+![Architecture Diagram](https://github.com/ansisme/urlshortener/blob/master/URL-Shortener.png)
+[Architecture Diagram](https://github.com/ansisme/urlshortener/blob/master/URL-Shortener.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
