@@ -99,7 +99,7 @@ Finally **Deploy API** when you feel everything is working just fine, copy your 
 
 Now run `npm start` for the project to test locally on `localhost:3000` or simply visit your static website url to test the website confifigured with your API. Try pasting long URLs in the searchbox and shorten them, share it with your friends!.
 
-6. Configure AWS Cloudfront with S3
+6. ### Configure AWS Cloudfront with S3
 
 To globally host your website on a distributed network we use `AWS CDN`.
    - Click on `Create distribution` and choose Origin Domain related to S3.
