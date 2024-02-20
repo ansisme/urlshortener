@@ -2,13 +2,13 @@
 ![Architecture Diagram](https://github.com/ansisme/urlshortener/blob/master/URL-Shortener.png)
 [Architecture Diagram](https://github.com/ansisme/urlshortener/blob/master/URL-Shortener.png)
 
-The project is build using `AWS Cloud Services` 
-1. `AWS Lambda`
-2. `AWS API Gateway`
-3. `AWS DynamoDB`
-4. `AWS S3`
-5. `AWS CLoudfront`
-6. `AWS IAM`
+The project is build using 6 most useful Serverless services of `AWS` .
+1. AWS Lambda
+2. AWS API Gateway
+3. AWS DynamoDB
+4. AWS S3
+5. AWS CLoudfront
+6. AWS IAM
 
    
 ## Steps
@@ -97,9 +97,9 @@ When you test both the methods, make sure you get status code `200` for the POST
 
 Finally **Deploy API** when you feel everything is working just fine, copy your `Invoke URL` and paste it in the `url.jsx` by replacing the one that's already there.
 
-Now run `npm start` for the project to test locally on `localhost:3000` or simply visit your static website url to test the website confifigured with your API. Try pasting long URLs in the searchbox and shorten them, share it with your friends!.
+Now run `npm start` for the project to test locally on `localhost:3000` or simply visit your static website url to test the website configured with your API. Try pasting long URLs in the searchbox and shorten them, share it with your friends!
 
-6. Configure AWS Cloudfront with S3
+6. ### Configure AWS Cloudfront with S3
 
 To globally host your website on a distributed network we use `AWS CDN`.
    - Click on `Create distribution` and choose Origin Domain related to S3.
@@ -111,10 +111,10 @@ To globally host your website on a distributed network we use `AWS CDN`.
 
    The things I didn't mention above, leave up to default settings.
 
-Copy the policy provided by AWS CDN, and go the `Permissions` tab of your S3 Bucket and paste it in the `Bucket Policy`. remove the code entered earlier.
+Copy the policy provided by AWS CDN, and go the `Permissions` tab of your S3 Bucket and paste it in the `Bucket Policy`. Remove the code entered earlier.
 
 So, now if you go to check the S3 deployed static website, you will say `403 forbidden`, that's alright!
 
-Finally go back to AWS CDN, copy the Cloudfront DNS and paste it in the browser and boom, it website is now hosted on AWS CDN globally distributed to users at a lower latency. 
+Finally go back to AWS CDN, copy the Cloudfront DNS and paste it in the browser and boom, your website is now hosted on AWS CDN globally distributed to users at a lower latency. 
 
 
