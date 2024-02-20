@@ -23,6 +23,7 @@ const UrlShortenerForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <h1 className='text-align:center'>URL Shortener</h1>
         <label>
           Long URL:
           <input

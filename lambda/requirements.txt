@@ -1,0 +1,9 @@
+aws-lambda-powertools
+boto3
+botocore
+jmespath
+python-dateutil
+s3transfer
+six
+typing_extensions
+urllib3
