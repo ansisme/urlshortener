@@ -51,12 +51,12 @@ Create a basic Lambda function and attach the `IAM Role` you just created in ste
   - Create a Lambda Layer and choose AWS Layers, select `AWSLambdaPowertoolsPythonV2`.
   - Follow the lambda structure given in the backend code in the `backend folder`.
 
+Add your `Invoke URL` in the Environment variables after you carete an API in the API Gateway. Along with that add your table name in the Environment Variables too under the Conguration tab of the Lambda Function.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+>**Make sure you add a `/` after the Invoke URL when adding the Environment Variables.**
 
-### Create an s3 Bucket
-Create an s3 bucket, enable `ACL` and grant turn of Block public access. 
+4. ### Create an s3 Bucket
+Create an s3 bucket, enable `ACL` and grant turn off `Block public` access. 
 
 Edit the bukcet policy as follows: 
 ```
@@ -79,52 +79,42 @@ Edit the bukcet policy as follows:
 ```
 Enable Static Hosting, verify if the URL is working.
 
+After S3 setup, fork and clone this repo as `git clone https://github.com/<yourusername>/urlshortener`.
 
-### Create a API
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Run `npm install` and then `npm run build`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Upload the `build` folder of the frontend in the S3 bucket, make sure the objects are accessible publically.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. ### Create an API in API Gateway
+Create a REST API
+   - Attach the Lmabda function you created above 
+   - Create two methods
+     - POST under the `/create` Resource and GET in the `/{shortId}` Resource.
+   - In `Integration Response` enable `Lambda Proxy Integration` for both the Methods.
+   - Enable CORS for both POST and GET methods.
 
-### `npm run eject`
+When you test both the methods, make sure you get status code `200` for the POST Request (after adding request body) and `301` for the GET Request (no request body required).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Finally **Deploy API** when you feel everything is working just fine, copy your `Invoke URL` and paste it in the `url.jsx` by replacing the one that's already there.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Now run `npm start` for the project to test locally on `localhost:3000` or simply visit your static website url to test the website confifigured with your API. Try pasting long URLs in the searchbox and shorten them, share it with your friends!.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+6. Configure AWS Cloudfront with S3
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+To globally host your website on a distributed network we use `AWS CDN`.
+   - Click on `Create distribution` and choose Origin Domain related to S3.
+   - Create OAC, AWS will itself give the name you just need to click on Create
+   - Viewer and Protocol Policy `Redirect HTTP to HTTPS`
+   - Cache Policy `Cache Optimized`
+   - Default root object write `index.html`
+   - Click on Do not enable security protections under `WAF`.
 
-## Learn More
+   The things I didn't mention above, leave up to default settings.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Copy the policy provided by AWS CDN, and go the `Permissions` tab of your S3 Bucket and paste it in the `Bucket Policy`. remove the code entered earlier.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+So, now if you go to check the S3 deployed static website, you will say `403 forbidden`, that's alright!
 
-### Code Splitting
+Finally go back to AWS CDN, copy the Cloudfront DNS and paste it in the browser and boom, it website is now hosted on AWS CDN globally distributed to users at a lower latency. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
