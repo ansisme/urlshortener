@@ -130,7 +130,7 @@ To globally host your website on a distributed network we use `AWS CDN`.
      
    - Cache Policy `Cache Optimized`
      
-     [!CDN other settings](https://github.com/ansisme/urlshortener/blob/master/images/CDN-other-settings.png)
+     ![CDN other settings](https://github.com/ansisme/urlshortener/blob/master/images/CDN-other-settings.png)
      
    - Default root object write `index.html`
    - Click on Do not enable security protections under `WAF`.
